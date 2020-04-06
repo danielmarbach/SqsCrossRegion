@@ -234,6 +234,10 @@ namespace Subscriber
         {
             if (request.QueueUrl.Contains(otherRegionClient.Config.RegionEndpoint.SystemName))
             {
+                foreach (var entry in request.Entries)
+                {
+                    entry.MessageBody = entry.MessageBody.Replace("\"Subscriber\"", "\"Subscriber||OtherRegion\"");
+                }
                 return otherRegionClient.SendMessageBatchAsync(request, cancellationToken);
             }
 
